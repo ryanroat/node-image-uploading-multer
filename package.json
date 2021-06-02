@@ -1,0 +1,30 @@
+{
+  "name": "image-uploading-multer",
+  "version": "1.0.0",
+  "description": "Demo of image uploading in Node utilizing Multer",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanroat/node-image-uploading-multer.git"
+  },
+  "keywords": [
+    "node",
+    "multer",
+    "express",
+    "javascript"
+  ],
+  "author": "Ryan Roat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ryanroat/node-image-uploading-multer/issues"
+  },
+  "homepage": "https://github.com/ryanroat/node-image-uploading-multer#readme",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "multer": "^1.4.2"
+  }
+}
