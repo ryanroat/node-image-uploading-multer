@@ -2,9 +2,11 @@
   "name": "image-uploading-multer",
   "version": "1.0.0",
   "description": "Demo of image uploading in Node utilizing Multer",
+  "type": "module",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js",
+    "devstart": "nodemon app.js"
   },
   "repository": {
     "type": "git",
