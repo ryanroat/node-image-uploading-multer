@@ -1,7 +1,9 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
 
 // dependencies
 import express from 'express';
+// eslint-disable-next-line no-unused-vars
 import ejs from 'ejs';
 import multer from 'multer';
 import path from 'path';
@@ -23,6 +25,7 @@ const storage = multer.diskStorage({
 
 // check upload file extension and mime type
 
+// eslint-disable-next-line consistent-return
 function checkFileType(file, callback) {
   const extensionAllowed = allowedFileTypes.test(path.extname(file.originalname).toLowerCase());
   const mimeTypeAllowed = allowedFileTypes.test(file.mimetype);
@@ -64,7 +67,7 @@ app.post('/upload', (req, res) => {
       res.render('index', {
         msg: err,
       });
-    } else if (req.file == undefined) {
+    } else if (req.file === undefined) {
       res.render('index', {
         msg: 'Error: please select an image file',
       });
@@ -75,6 +78,11 @@ app.post('/upload', (req, res) => {
       });
     }
   });
+});
+
+// handle uncaptured routes
+app.use((req, res, next) => {
+  res.status(404).send("Sorry can't find that!");
 });
 
 // TODO: need to catch 404 after all other routes
