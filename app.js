@@ -7,7 +7,8 @@ import multer from 'multer';
 import path from 'path';
 
 // app global constants
-const fileSIzeByteLimit = 60500; // set the upper file size limit in bytes here
+const fileSIzeByteLimit = 1000000; // set the upper file size limit in bytes here
+const allowedFileTypes = /jpeg|jpg|png|gif/; // add or remove allowed file types here
 
 // set storage engine
 const storage = multer.diskStorage({
@@ -20,10 +21,24 @@ const storage = multer.diskStorage({
   },
 });
 
+// check upload file extension and mime type
+
+function checkFileType(file, callback) {
+  const extensionAllowed = allowedFileTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimeTypeAllowed = allowedFileTypes.test(file.mimetype);
+  if (extensionAllowed && mimeTypeAllowed) {
+    return callback(null, true);
+  }
+  callback('Error: Image files only!');
+}
+
 // init upload
 const upload = multer({
   storage,
   limits: { fileSize: fileSIzeByteLimit },
+  fileFilter(req, file, callback) {
+    checkFileType(file, callback);
+  },
 });
 
 // init express server
