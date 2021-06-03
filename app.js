@@ -12,7 +12,8 @@ const storage = multer.diskStorage({
     callback(null, './public/uploads/');
   },
   filename(req, file, callback) {
-    callback(null, `${file.originalname}-${Date.now()}${path.extname(file.originalname)}`);
+    const filenameObj = path.parse(file.originalname);
+    callback(null, `${filenameObj.name}-${Date.now()}${filenameObj.ext}`);
   },
 });
 
@@ -35,24 +36,33 @@ app.use(express.static('./public'));
 // render index page on GET requests to root
 app.get('/', (req, res) => res.render('index'));
 
-// test POST request to /upload
-app.post('/upload', upload.single('filename'), (req, res) => {
-  console.log(req.file, req.body);
-});
-
-// // capture POST requests to /upload
-// app.post('/upload', (req, res) => {
-//   upload(req, res, (err) => {
-//     if (err) {
-//       res.render('index', {
-//         msg: err,
-//       });
-//     } else {
-//       console.log(req);
-//       res.send('test');
-//     }
-//   });
+// // test POST request to /upload
+// app.post('/upload', upload.single('filename'), (req, res) => {
+//   console.log(req.file, req.body);
 // });
+
+// capture POST requests to /upload
+app.post('/upload', (req, res) => {
+  upload.single('filename')(req, res, (err) => {
+    if (err) {
+      res.render('index', {
+        msg: err,
+      });
+    } else {
+      // console.log(req.file);
+      if (req.file == undefined) {
+        res.render('index', {
+          msg: 'Error: please select an image file',
+        });
+      } else {
+        res.render('index', {
+          msg: 'File uploaded.',
+          file: `uploads/${req.file.filename}`,
+        });
+      }
+    }
+  });
+});
 
 // TODO: need to catch 404 after all other paths
 
