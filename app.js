@@ -3,6 +3,7 @@
 
 // dependencies
 import express from 'express';
+import partials from 'express-partials';
 // eslint-disable-next-line no-unused-vars
 import ejs from 'ejs';
 import multer from 'multer';
@@ -53,6 +54,7 @@ const port = 3000;
 // set EJS as template view engine
 app.set('views', './views');
 app.set('view engine', 'ejs');
+app.use(partials());
 
 // use a public folder for static elements
 app.use(express.static('./public'));
@@ -81,10 +83,9 @@ app.post('/upload', (req, res) => {
 });
 
 // handle uncaptured routes
+// TODO: redirect with message to index?
 app.use((req, res, next) => {
   res.status(404).send("Sorry can't find that!");
 });
-
-// TODO: need to catch 404 after all other routes
 
 app.listen(port, () => console.log(`Server running on port ${port}.`));
