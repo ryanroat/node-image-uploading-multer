@@ -85,7 +85,8 @@ app.post('/upload', (req, res) => {
 // handle uncaptured routes
 // TODO: redirect with message to index?
 app.use((req, res, next) => {
-  res.status(404).send("Sorry can't find that!");
+  // res.status(404).send("Sorry can't find that!");
+  res.status(404).render('404');
 });
 
 app.listen(port, () => console.log(`Server running on port ${port}.`));
